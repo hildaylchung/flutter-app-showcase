@@ -1,17 +1,24 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:flutter_showcase_riverpod/config.dart';
+// Package imports:
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomePage extends StatelessWidget {
+// Project imports:
+import '../config.dart';
+import '../provider/user.dart';
+
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final User? user = ref.watch(globalUserProvider).user;
     return Scaffold(
         body: ListView(
-      children: [Text('Hi', style: AppTextStyle.pageTitle)],
+      children: [
+        Text('Hi ${user?.name ?? 'Guest'}!', style: AppTextStyle.pageTitle)
+      ],
     ));
   }
 }
