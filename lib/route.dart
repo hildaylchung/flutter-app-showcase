@@ -9,5 +9,5 @@ abstract class AppRouteName {
   static const String login = '/login';
 
   // signup
-  static const  String signup = '/signup';
+  static const String signup = '/signup';
 }

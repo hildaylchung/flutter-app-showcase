@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:flutter_showcase_riverpod/config.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,9 +9,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: ListView(children: [
-      Text('Hi', style: AppTextStyle.pageTitle)
-    ],));
+    return Scaffold(
+        body: ListView(
+      children: [Text('Hi', style: AppTextStyle.pageTitle)],
+    ));
   }
-
 }

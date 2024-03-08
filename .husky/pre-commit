@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-dart format .
 flutter pub run import_sorter:main
-
+dart format .
