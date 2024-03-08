@@ -8,6 +8,9 @@ class AppTextStyle {
   static TextStyle pageTitle = GoogleFonts.roboto(
       fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black);
 
+  static TextStyle twoLineTitle = GoogleFonts.roboto(
+      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
+
   static TextStyle sectionTitle =
       GoogleFonts.roboto(fontSize: 20, color: Colors.black87);
 
