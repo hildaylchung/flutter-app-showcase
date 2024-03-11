@@ -2,14 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'route.dart';
-import 'screens/home.dart';
+import 'screens/main_view.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: '.env');
   runApp(const ProviderScope(child: MyApp()));
 }
 

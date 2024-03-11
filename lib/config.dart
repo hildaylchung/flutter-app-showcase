@@ -11,9 +11,20 @@ class AppTextStyle {
   static TextStyle twoLineTitle = GoogleFonts.roboto(
       fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
 
-  static TextStyle sectionTitle =
-      GoogleFonts.roboto(fontSize: 20, color: Colors.black87);
+  static TextStyle contentTitle = GoogleFonts.roboto(
+      fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
+
+  static TextStyle contentTitleTight = GoogleFonts.roboto(
+          fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)
+      .copyWith(height: 1.1);
 
   static TextStyle body = GoogleFonts.roboto(
-      fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black54);
+      fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black45);
+
+  static TextStyle bodyTight = GoogleFonts.roboto(
+          fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black45)
+      .copyWith(height: 1.1);
+
+  static TextStyle strong = GoogleFonts.roboto(
+      fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54);
 }
