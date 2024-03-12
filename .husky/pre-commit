@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 dart run import_sorter:main
 dart format .
+
+. "$(dirname -- "$0")/_/husky.sh"
