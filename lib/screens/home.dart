@@ -29,6 +29,9 @@ class HomeTab extends ConsumerWidget {
             style: AppTextStyle.twoLineTitle),
         Text(DateFormat('MMMM d').format(now),
             style: AppTextStyle.twoLineTitle),
+
+        const SizedBox(height: 12),
+
         // uk news
         const NewsFeed(title: 'UK News', country: 'gb'),
 

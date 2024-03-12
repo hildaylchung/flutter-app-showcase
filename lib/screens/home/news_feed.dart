@@ -6,6 +6,7 @@ import 'package:news_api_flutter_package/model/article.dart';
 
 // Project imports:
 import 'package:flutter_showcase_riverpod/config.dart';
+import '../../utils/date.dart';
 import '../../utils/news_api.dart';
 import '../../utils/url_launch.dart';
 import '../../widgets/error.dart';
@@ -13,36 +14,35 @@ import '../../widgets/error.dart';
 class NewsFeed extends StatelessWidget {
   final String title;
   final String country;
+
   const NewsFeed({super.key, required this.title, required this.country});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: AppTextStyle.pageTitle),
-        const SizedBox(height: 16),
-        Container(
-            margin: const EdgeInsets.symmetric(horizontal: 2),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-            constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(1, 1),
-                      blurRadius: 4)
-                ],
-                borderRadius: BorderRadius.circular(8)),
-            child: NewsList(country: country)),
-      ],
-    );
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                  color: Colors.black12, offset: Offset(1, 1), blurRadius: 4)
+            ],
+            borderRadius: BorderRadius.circular(8)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: AppTextStyle.pageTitle),
+            const SizedBox(height: 16),
+            NewsList(country: country),
+          ],
+        ));
   }
 }
 
 class NewsList extends StatelessWidget {
   final String country;
+
   const NewsList({super.key, required this.country});
 
   @override
@@ -73,15 +73,24 @@ class NewsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(article.title ?? '', style: AppTextStyle.contentTitleTight),
-      if (article.content != null)
-        Text(article.content!, style: AppTextStyle.bodyTight),
-      if (article.author != null)
-        Row(children: [
-          const Spacer(),
-          Text('-- ${article.author!}', style: AppTextStyle.strong)
-        ])
-    ]);
+    final DateTime pubDate =
+        DateTime.tryParse(article.publishedAt ?? '') ?? DateTime.now();
+    return GestureDetector(
+      onTap: () {
+        if (article.url == null) return;
+        launchUrl(article.url!);
+      },
+      child: Column(children: [
+        Text(article.title ?? '', style: AppTextStyle.titleTight),
+        if (article.content != null)
+          Text(article.content!, style: AppTextStyle.bodyTight),
+        if (article.author != null)
+          Row(children: [
+            const Spacer(),
+            Text('${formatDateAgo(pubDate)} · ${article.author!}',
+                style: AppTextStyle.strong)
+          ])
+      ]),
+    );
   }
 }

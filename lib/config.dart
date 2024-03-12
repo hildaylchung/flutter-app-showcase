@@ -11,10 +11,10 @@ class AppTextStyle {
   static TextStyle twoLineTitle = GoogleFonts.roboto(
       fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
 
-  static TextStyle contentTitle = GoogleFonts.roboto(
+  static TextStyle title = GoogleFonts.roboto(
       fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
 
-  static TextStyle contentTitleTight = GoogleFonts.roboto(
+  static TextStyle titleTight = GoogleFonts.roboto(
           fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)
       .copyWith(height: 1.1);
 

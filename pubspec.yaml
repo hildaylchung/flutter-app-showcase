@@ -46,6 +46,7 @@ dependencies:
       url: https://github.com/hildaylchung/news_api_flutter_package.git
       ref: master
   url_launcher: ^6.2.5
+  get_time_ago: ^1.3.1
 
 dev_dependencies:
   flutter_test:
