@@ -2,20 +2,18 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_api_flutter_package/model/article.dart';
 
 // Project imports:
 import 'package:flutter_showcase_riverpod/config.dart';
+import 'package:flutter_showcase_riverpod/provider/news.dart';
 import '../../utils/date.dart';
-import '../../utils/news_api.dart';
 import '../../utils/url_launch.dart';
-import '../../widgets/error.dart';
 
 class NewsFeed extends StatelessWidget {
-  final String title;
-  final String country;
-
-  const NewsFeed({super.key, required this.title, required this.country});
+  final NewsCountry country;
+  const NewsFeed({super.key, required this.country});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,7 @@ class NewsFeed extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: AppTextStyle.pageTitle),
+            Text('${country.fullname} News', style: AppTextStyle.pageTitle),
             const SizedBox(height: 16),
             NewsList(country: country),
           ],
@@ -40,29 +38,35 @@ class NewsFeed extends StatelessWidget {
   }
 }
 
-class NewsList extends StatelessWidget {
-  final String country;
+class NewsList extends ConsumerWidget {
+  final NewsCountry country;
 
   const NewsList({super.key, required this.country});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getNews(country),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            debugPrint('NewsFeed err: ${snapshot.error}');
-            return const Text(errMsgTryAgainLater);
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final NewsState newsState = ref.watch(newsProvider);
 
-          List<Article> articles = snapshot.data ?? [];
-          return Wrap(
-              runSpacing: 10,
-              children: articles.map((a) => NewsTile(article: a)).toList());
-        });
+    if (newsState.needRefetch || newsState.lastFetched == null) {
+      if (newsState.needRefetch) {
+        ref.read(newsProvider.notifier).fetchAllNews();
+      }
+      return const Center(child: CircularProgressIndicator());
+    }
+    return NewsListInner(articles: newsState[country] ?? []);
+  }
+}
+
+class NewsListInner extends StatelessWidget {
+  final List<Article> articles;
+
+  const NewsListInner({super.key, required this.articles});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+        runSpacing: 10,
+        children: articles.map((a) => NewsTile(article: a)).toList());
   }
 }
 

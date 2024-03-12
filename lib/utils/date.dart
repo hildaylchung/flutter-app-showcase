@@ -35,13 +35,9 @@ class CustomDateString implements Messages {
 }
 
 String formatDateAgo(DateTime d) {
-  print('d: $d');
   final now = DateTime.now();
   if (d.isAfter(now)) {
     return '';
   }
-
-  final String str = GetTimeAgo.parse(d);
-  print(str);
-  return str;
+  return GetTimeAgo.parse(d);
 }
