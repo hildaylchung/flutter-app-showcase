@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -24,29 +25,41 @@ class HomeTab extends ConsumerWidget {
             ? 'Evening'
             : 'Afternoon';
 
+    /// fetching news outside the newsFeed section to prevent fetch several times
     final NewsState newsState = ref.watch(newsProvider);
     if (newsState.lastFetched == null) {
       ref.watch(newsProvider.notifier).fetchAllNews();
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ListView(children: [
-        Text('$greeting ${user?.name ?? 'Guest'}!',
-            style: AppTextStyle.twoLineTitle),
-        Text(DateFormat('MMMM d').format(now),
-            style: AppTextStyle.twoLineTitle),
+    return ListView(padding: EdgeInsets.zero, children: [
+      Stack(children: [
+        Positioned(
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 180,
+                color: Colors.blue)),
+        Container(
+          padding: EdgeInsets.only(
+              left: 16, right: 16, top: MediaQuery.of(context).padding.top),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('$greeting ${user?.name ?? 'Guest'}!',
+                style: AppTextStyle.twoLineTitle),
+            Text(DateFormat('MMMM d').format(now),
+                style: AppTextStyle.twoLineTitle),
 
-        const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-        // uk news
-        const NewsFeed(country: NewsCountry.gb),
+            // uk news
+            const NewsFeed(country: NewsCountry.gb),
 
-        const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-        // hk news
-        const NewsFeed(country: NewsCountry.hk)
+            // hk news
+            const NewsFeed(country: NewsCountry.hk)
+          ]),
+        ),
       ]),
-    );
+    ]);
   }
 }
