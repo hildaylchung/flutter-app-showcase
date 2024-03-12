@@ -30,7 +30,8 @@ class NewsFeed extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${country.fullname} News', style: AppTextStyle.pageTitle),
+            Text('${country.fullname} Top Headlines',
+                style: AppTextStyle.pageTitle),
             const SizedBox(height: 16),
             NewsList(country: country),
           ],
