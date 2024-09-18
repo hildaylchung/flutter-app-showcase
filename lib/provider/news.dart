@@ -5,6 +5,9 @@ import 'package:news_api_flutter_package/model/article.dart';
 // Project imports:
 import '../utils/news_api.dart';
 
+// in mins
+const newsRefetchTime = 15;
+
 enum NewsCountry {
   gb,
   us,
@@ -34,7 +37,8 @@ class NewsState {
 
   bool get needRefetch =>
       lastFetched != null &&
-      DateTime.now().isAfter(lastFetched!.add(const Duration(minutes: 10)));
+      DateTime.now()
+          .isAfter(lastFetched!.add(const Duration(minutes: newsRefetchTime)));
 
   NewsState copyWith(
       {List<Article>? ukNews,

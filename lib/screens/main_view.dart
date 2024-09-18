@@ -12,7 +12,7 @@ import 'profile.dart';
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
 
-  static const pages = [HomeTab(), ProfilePage()];
+  static const pages = [HomeTab(), ProfileTab()];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -25,6 +25,13 @@ class AppTextStyle {
           fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black45)
       .copyWith(height: 1.1);
 
+  static TextStyle bodyDarker = GoogleFonts.hind(
+          fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black87)
+      .copyWith(height: 1.1);
+
+  static TextStyle emphasizedNumber = GoogleFonts.hind(
+      fontSize: 36, fontWeight: FontWeight.w800, color: Colors.black);
+
   static TextStyle strong = GoogleFonts.hind(
       fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black54);
 }

@@ -10,6 +10,7 @@ import 'package:flutter_showcase_riverpod/config.dart';
 import 'package:flutter_showcase_riverpod/provider/news.dart';
 import '../../utils/date.dart';
 import '../../utils/url_launch.dart';
+import '../basic_section_wrapper.dart';
 
 class NewsFeed extends StatelessWidget {
   final NewsCountry? country;
@@ -18,31 +19,22 @@ class NewsFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.black12, offset: Offset(1, 1), blurRadius: 4)
-            ],
-            borderRadius: BorderRadius.circular(8)),
+    return BasicSectionWrapper(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (country != null) ...[
-              Text('${country!.fullname} Top Headlines',
-                  style: AppTextStyle.pageTitle),
-              const SizedBox(height: 16),
-              NewsList(country: country),
-            ] else ...[
-              Text('BBC Top Headlines', style: AppTextStyle.pageTitle),
-              const SizedBox(height: 16),
-              const NewsList()
-            ]
-          ],
-        ));
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (country != null) ...[
+          Text('${country!.fullname} Top Headlines',
+              style: AppTextStyle.pageTitle),
+          const SizedBox(height: 16),
+          NewsList(country: country),
+        ] else ...[
+          Text('BBC Top Headlines', style: AppTextStyle.pageTitle),
+          const SizedBox(height: 16),
+          const NewsList()
+        ]
+      ],
+    ));
   }
 }
 

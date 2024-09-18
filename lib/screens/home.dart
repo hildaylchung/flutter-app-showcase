@@ -8,16 +8,18 @@ import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:flutter_showcase_riverpod/provider/news.dart';
+import 'package:flutter_showcase_riverpod/provider/weather.dart';
 import '../../config.dart';
 import '../../provider/user.dart';
-import 'home/home_shortcut_section.dart';
-import 'home/news_feed.dart';
+import '../widgets/home/news_feed.dart';
+import '../widgets/home/weather_forcast.dart';
 
 class HomeTab extends ConsumerWidget {
   const HomeTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print('build home');
     final User? user = ref.watch(globalUserProvider).user;
     final now = DateTime.now();
     final greeting = now.hour < 12
@@ -26,10 +28,15 @@ class HomeTab extends ConsumerWidget {
             ? 'Evening'
             : 'Afternoon';
 
-    /// fetching news outside the newsFeed section to prevent fetch several times
+    /// fetching data outside the section to prevent fetch several times
     final NewsState newsState = ref.watch(newsProvider);
     if (newsState.lastFetched == null) {
       ref.watch(newsProvider.notifier).fetchAllNews();
+    }
+
+    final WeatherState weatherState = ref.watch(weatherProvider);
+    if (weatherState.lastFetched == null) {
+      ref.watch(weatherProvider.notifier).getWeather();
     }
 
     return ListView(padding: EdgeInsets.zero, children: [
@@ -46,6 +53,11 @@ class HomeTab extends ConsumerWidget {
                 style: AppTextStyle.twoLineTitle),
 
             const SizedBox(height: 12),
+
+            // temperature
+            const WeatherSection(),
+
+            const SizedBox(height: 24),
 
             // uk news
             const NewsFeed(),
