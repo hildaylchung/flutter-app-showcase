@@ -7,7 +7,7 @@ import '../utils/news_api.dart';
 
 enum NewsCountry {
   gb,
-  hk,
+  us,
 }
 
 extension CountryToStringExtension on NewsCountry {
@@ -15,8 +15,8 @@ extension CountryToStringExtension on NewsCountry {
     switch (this) {
       case NewsCountry.gb:
         return 'UK';
-      case NewsCountry.hk:
-        return 'Hong Kong';
+      case NewsCountry.us:
+        return 'The State';
       default:
         return '';
     }
@@ -24,29 +24,34 @@ extension CountryToStringExtension on NewsCountry {
 }
 
 class NewsState {
+  List<Article>? bbcNews;
   List<Article>? ukNews;
-  List<Article>? hkNews;
+  List<Article>? usNews;
 
   DateTime? lastFetched;
 
-  NewsState({this.ukNews, this.hkNews, this.lastFetched});
+  NewsState({this.ukNews, this.usNews, this.bbcNews, this.lastFetched});
 
   bool get needRefetch =>
       lastFetched != null &&
       DateTime.now().isAfter(lastFetched!.add(const Duration(minutes: 10)));
 
   NewsState copyWith(
-      {List<Article>? ukNews, List<Article>? hkNews, DateTime? lastFetched}) {
+      {List<Article>? ukNews,
+      List<Article>? usNews,
+      List<Article>? bbcNews,
+      DateTime? lastFetched}) {
     return NewsState(
         ukNews: ukNews ?? this.ukNews,
-        hkNews: hkNews ?? this.hkNews,
+        usNews: usNews ?? this.usNews,
+        bbcNews: bbcNews ?? this.bbcNews,
         lastFetched: lastFetched ?? this.lastFetched);
   }
 
   List<Article>? operator [](NewsCountry cn) {
     switch (cn) {
-      case NewsCountry.hk:
-        return hkNews;
+      case NewsCountry.us:
+        return usNews;
       case NewsCountry.gb:
         return ukNews;
     }
@@ -58,11 +63,10 @@ class NewsStateNotifier extends Notifier<NewsState> {
   NewsState build() => NewsState();
 
   void fetchAllNews() async {
-    final hkArticles = await getNews(NewsCountry.hk.name);
-    final ukArticles = await getNews(NewsCountry.gb.name);
-
+    final usArticles = await getNews(country: NewsCountry.us.name);
+    final bbcArticles = await getNews();
     state = state.copyWith(
-        ukNews: ukArticles, hkNews: hkArticles, lastFetched: DateTime.now());
+        bbcNews: bbcArticles, usNews: usArticles, lastFetched: DateTime.now());
   }
 }
 

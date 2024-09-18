@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_showcase_riverpod/provider/news.dart';
 import '../../config.dart';
 import '../../provider/user.dart';
+import 'home/home_shortcut_section.dart';
 import 'home/news_feed.dart';
 
 class HomeTab extends ConsumerWidget {
@@ -57,12 +58,12 @@ class HomeTab extends ConsumerWidget {
             const SizedBox(height: 12),
 
             // uk news
-            const NewsFeed(country: NewsCountry.gb),
+            const NewsFeed(),
 
             const SizedBox(height: 16),
 
-            // hk news
-            const NewsFeed(country: NewsCountry.hk)
+            /// shortcut keys section
+            // const ShortcutSection()
           ]),
         ),
       ]),

@@ -25,7 +25,18 @@ class NewsAPICaller {
   }
 }
 
-Future<List<Article>?> getNews(String country) async {
-  return await NewsAPICaller.instance
-      .getTopHeadlines(country: country, pageSize: defaultPageSize);
+Future<List<Article>?> getNews({String? country}) async {
+  try {
+    // await NewsAPICaller.instance
+    //     .getTopHeadlines(country: country, pageSize: defaultPageSize);
+    // Note: getTopHeadlines api for country is not working outside us for now
+    // you can test with: https://newsapi.org/v2/top-headlines?country=gb&apiKey=
+    return await NewsAPICaller.instance.getTopHeadlines(
+        country: country,
+        sources: country == null ? 'bbc-news' : null,
+        pageSize: defaultPageSize);
+  } catch (err) {
+    print(err);
+    return null;
+  }
 }

@@ -12,8 +12,9 @@ import '../../utils/date.dart';
 import '../../utils/url_launch.dart';
 
 class NewsFeed extends StatelessWidget {
-  final NewsCountry country;
-  const NewsFeed({super.key, required this.country});
+  final NewsCountry? country;
+
+  const NewsFeed({super.key, this.country});
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +31,25 @@ class NewsFeed extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${country.fullname} Top Headlines',
-                style: AppTextStyle.pageTitle),
-            const SizedBox(height: 16),
-            NewsList(country: country),
+            if (country != null) ...[
+              Text('${country!.fullname} Top Headlines',
+                  style: AppTextStyle.pageTitle),
+              const SizedBox(height: 16),
+              NewsList(country: country),
+            ] else ...[
+              Text('BBC Top Headlines', style: AppTextStyle.pageTitle),
+              const SizedBox(height: 16),
+              const NewsList()
+            ]
           ],
         ));
   }
 }
 
 class NewsList extends ConsumerWidget {
-  final NewsCountry country;
+  final NewsCountry? country;
 
-  const NewsList({super.key, required this.country});
+  const NewsList({super.key, this.country});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,7 +61,9 @@ class NewsList extends ConsumerWidget {
       }
       return const Center(child: CircularProgressIndicator());
     }
-    return NewsListInner(articles: newsState[country] ?? []);
+    return NewsListInner(
+        articles:
+            (country != null ? newsState[country!] : newsState.bbcNews) ?? []);
   }
 }
 
