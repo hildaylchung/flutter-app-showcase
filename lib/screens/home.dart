@@ -34,17 +34,7 @@ class HomeTab extends ConsumerWidget {
 
     return ListView(padding: EdgeInsets.zero, children: [
       Stack(children: [
-        Positioned(
-            child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: ClipRect(
-                    child: OverflowBox(
-                  minWidth: MediaQuery.of(context).size.width,
-                  maxHeight: MediaQuery.of(context).size.width / 1.5,
-                  child: Image.asset('assets/images/purple-background.jpg',
-                      width: MediaQuery.of(context).size.width),
-                )))),
+        const Positioned(child: HomepageBackgroundBanner()),
         Container(
           padding: EdgeInsets.only(
               left: 16, right: 16, top: MediaQuery.of(context).padding.top),
@@ -68,5 +58,23 @@ class HomeTab extends ConsumerWidget {
         ),
       ]),
     ]);
+  }
+}
+
+class HomepageBackgroundBanner extends StatelessWidget {
+  const HomepageBackgroundBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: 200,
+        child: ClipRect(
+            child: OverflowBox(
+          minWidth: MediaQuery.of(context).size.width,
+          maxHeight: MediaQuery.of(context).size.width / 1.5,
+          child: Image.asset('assets/images/purple-background.jpg',
+              width: MediaQuery.of(context).size.width),
+        )));
   }
 }
